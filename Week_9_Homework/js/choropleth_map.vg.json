@@ -1,25 +1,42 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "Melbourne City Tree Canopy 2021",
-  "width": 800,
-  "height": 400,
-  "projection": {"type": "mercator"},
+  "width": 1200,
+  "height": 800,
+  "projection": {"type": "stereographic"},
   "layer":[
     {
       "data": {
         "url": "https://raw.githubusercontent.com/candlec/3179/57c1924351474d9478213507f2b8329754b1394c/Week_9_Homework/js/MB_2016_VIC.json",
         "format": {"type": "topojson", "feature": "MB_2016_VIC"}
       },
-      "mark": {"type": "geoshape", "stroke":"black"}
+      "mark": {"type": "geoshape", "fill":"white", "stroke":"black"},
+      "transform": [
+        {
+          "lookup": "SA2_NAME16",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/candlec/3179/57c1924351474d9478213507f2b8329754b1394c/Week_9_Homework/js/MB_2016_VIC.json",
+              "format": {
+                "type": "topojson",
+                "feature": "SA2_NAME16"
+              }
+            },
+            "key": "SA2_NAME16"
+          },
+          "as": "geo"
+        }
+      ]
     },
     {
       "data": {
         "url": "https://raw.githubusercontent.com/candlec/3179/refs/heads/main/Week_9_Homework/data/2021TreeCanopy.csv"
       },
-      "mark": {"type": "geoshape", "tooltip": {"content": "data"}},
+      "mark": {"type": "circle", "color": "mediumseagreen"},
       "encoding": {
         "longitude": {"field": "longitude", "type":"quantitative"},
-        "latitude": {"field": "latitude", "type":"quantitative"}
+        "latitude": {"field": "latitude", "type":"quantitative"},
+        "size": {"value": 2}
       }
     }
   ]
